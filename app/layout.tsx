@@ -7,11 +7,12 @@ import { ModalProvider } from '@/components/modal-provider'
 import { CrispProvider } from '@/components/crisp-provider'
 
 import './globals.css'
+import Head from 'next/head'
 
 const font = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Design Lens',
+  title: 'Pixalens',
   description: 'AI Platform',
 }
 
@@ -22,7 +23,7 @@ export default async function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang='en' suppressHydrationWarning>
         {/* <CrispProvider /> */}
         <body className={font.className}>
           <ToasterProvider />
