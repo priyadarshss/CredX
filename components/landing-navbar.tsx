@@ -31,21 +31,17 @@ export const LandingNavbar = () => {
           <span className='text-white'>Pixa</span>
           <span className='text-[#fe8400]'>lens</span>
         </h1>
-        {/* className='text-transparent h-24 bg-clip-text bg-gradient-to-r from-[#dc2f02] to-[#ffba08]' */}
       </Link>
       <div className='flex items-center gap-x-5'>
-        <Link href={isSignedIn ? '/dashboard' : '/register'}>
+        <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
           <Button variant='outline' className='rounded-full'>
             {isSignedIn ? 'Dashboard' : 'Register'}
           </Button>
         </Link>
         {!isSignedIn && (
           <Link href={isSignedIn ? '/dashboard' : '/sign-in'}>
-            {/* <Button variant='secondary' className='rounded-full'>
-            {'Sign In'}
-          </Button> */}
             <Button className='rounded-full' type='submit'>
-              Sign In
+              Login
             </Button>
           </Link>
         )}
