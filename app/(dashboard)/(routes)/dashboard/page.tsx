@@ -7,25 +7,56 @@ import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
 import { tools } from '@/constants'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import dynamic from 'next/dynamic'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+const GaugeComponent = dynamic(() => import('react-gauge-component'), {
+  ssr: false,
+})
 
 export default function HomePage() {
   const router = useRouter()
   const [url, setUrl] = useState('')
   const [screenshot, setScreenshot] = useState('')
   const [loading, setLoading] = useState(false)
+  const [score, setScore] = useState(300)
+  const [isActive, setIsActive] = useState(true) // New state variable to control the interval
+  const [position, setPosition] = useState('bottom')
 
-  function downloadImage(imageSrc: string) {
-    const link = document.createElement('a')
-    link.href = imageSrc
-    link.download = 'download'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+  useEffect(() => {
+    let interval
+
+    if (isActive) {
+      interval = setInterval(() => {
+        setScore((prev) => {
+          if (prev >= 850) {
+            setIsActive(false) // Stop the interval
+            return 650 // Reset score to 600
+          }
+          return prev + 1 // Otherwise, increment score
+        })
+      }, 10)
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval) // Cleanup interval
+      }
+    }
+  }, [isActive]) // Depend on isActive
+
+  // Other component logic...
 
   const handleSubmit = async (event: any) => {
     setLoading(true)
@@ -34,8 +65,6 @@ export default function HomePage() {
       `https://api.screenshotmachine.com?key=f87fa6&url=${url}&dimension=1024xfull&delay=3000`
     )
     setScreenshot(res.url)
-    // downloadImage(res.url)
-
     setLoading(false)
   }
 
@@ -43,11 +72,34 @@ export default function HomePage() {
     <div>
       <div className='mb-8 space-y-4'>
         <h2 className='text-2xl md:text-4xl font-bold text-center'>
-          Explore the power of AI
+          Credit Score Analysis
         </h2>
         <p className='text-muted-foreground font-light text-sm md:text-lg text-center'>
-          Chat with the smartest AI - Experience the power of AI
+          Find your credit score and get a free credit report analysis within a
+          few seconds
         </p>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <GaugeComponent
+          type='semicircle'
+          arc={{
+            colorArray: ['#FF2121', '#00FF15'],
+            padding: 0.02,
+            subArcs: [
+              { limit: 400 },
+              { limit: 500 },
+              { limit: 600 },
+              { limit: 700 },
+              { limit: 800 },
+              {},
+            ],
+          }}
+          pointer={{ type: 'blob', animationDelay: 0 }}
+          value={score}
+          minValue={300}
+          maxValue={850}
+          style={{ width: '50%', height: '100%' }}
+        />
       </div>
       <div className='flex flex-col h-full space-y-4 p-4 overflow-auto'>
         {loading ? (
@@ -74,15 +126,47 @@ export default function HomePage() {
             />
           </div>
         ) : null}
-        <form className='flex justify-evenly' onSubmit={handleSubmit}>
-          <Input
-            className='border-2 border-gray-300 p-2 w-1/2'
-            type='text'
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder='Enter the URL of the website...'
-          />
-          <Button type='submit'>Submit</Button>
+        <form className='flex flex-col gap-10 mt-12' onSubmit={handleSubmit}>
+          <div className='flex justify-evenly'>
+            <Input
+              className='border-2 border-gray-300 p-2 w-1/2'
+              type='text'
+              value={
+                url.length > 0
+                  ? `${url.substring(0, 5)}...${url.substring(url.length - 5)}`
+                  : ''
+              }
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder='Enter your wallet address ...'
+              style={{ width: '20%', height: '50%' }}
+            />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant='outline'>Select The Chain</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className='w-56'>
+                <DropdownMenuLabel>Chain</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={position}
+                  onValueChange={setPosition}
+                >
+                  <DropdownMenuRadioItem value='ethereum'>
+                    Ethereum
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value='polygon'>
+                    Polygon
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div className='flex justify-evenly'>
+            <Button type='submit' className='flex w-32'>
+              Get my Score
+            </Button>
+          </div>
         </form>
       </div>
       {/* <div className="px-4 md:px-20 lg:px-32 space-y-4">
