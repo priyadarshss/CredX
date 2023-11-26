@@ -35,7 +35,7 @@ export default function HomePage() {
   const [position, setPosition] = useState('bottom')
 
   useEffect(() => {
-    let interval
+    let interval: any;
 
     if (isActive) {
       interval = setInterval(() => {
@@ -55,8 +55,6 @@ export default function HomePage() {
       }
     }
   }, [isActive]) // Depend on isActive
-
-  // Other component logic...
 
   const handleSubmit = async (event: any) => {
     setLoading(true)
