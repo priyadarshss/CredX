@@ -41,16 +41,26 @@ export const ProModal = () => {
     <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2">
-            <div className="flex items-center gap-x-2 font-bold text-xl">
+          <DialogTitle className='flex justify-center items-center flex-col gap-y-4 pb-2'>
+            <div className='flex items-center gap-x-2 font-bold text-xl'>
               Upgrade to Pixalens
-              <Badge variant="premium" className="uppercase text-sm py-1">
+              <Badge variant='premium' className='uppercase text-sm py-1'>
                 pro
               </Badge>
             </div>
           </DialogTitle>
-          <DialogDescription className="text-center pt-2 space-y-2 text-zinc-900 font-medium">
-            {tools.map((tool) => (
+          <DialogDescription className='text-center pt-2 space-y-2 text-zinc-900 font-medium'>
+            <Card
+              className='p-3 border-black/5 flex items-center justify-between'
+            >
+              <div className='flex items-center gap-x-4'>
+                <div className={cn('p-2 w-fit rounded-md', "blue")}>
+                </div>
+                <div className='font-semibold text-sm'>{"Credit Analysis"}</div>
+              </div>
+              <Check className='text-primary w-5 h-5' />
+            </Card>
+            {/* {tools.map((tool) => (
               <Card key={tool.href} className="p-3 border-black/5 flex items-center justify-between">
                 <div className="flex items-center gap-x-4">
                   <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
@@ -62,16 +72,22 @@ export const ProModal = () => {
                 </div>
                 <Check className="text-primary w-5 h-5" />
               </Card>
-            ))}
+            ))} */}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button disabled={loading} onClick={onSubscribe} size="lg" variant="premium" className="w-full">
+          <Button
+            disabled={loading}
+            onClick={onSubscribe}
+            size='lg'
+            variant='premium'
+            className='w-full'
+          >
             Upgrade to Pro
-            <Zap className="w-4 h-4 ml-2 fill-white" />
+            <Zap className='w-4 h-4 ml-2 fill-white' />
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 };
