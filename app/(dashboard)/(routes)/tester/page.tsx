@@ -1,3 +1,4 @@
+
 'use client'
 import OpenAI from 'openai'
 
@@ -15,6 +16,7 @@ export default function Page() {
 
   const handleUserInput = async () => {
     setIsLoading(true)
+    // @ts-ignore
     setChatHistory((prevChat) => [
       ...prevChat,
       { role: 'user', content: userInput },
@@ -24,6 +26,7 @@ export default function Page() {
       messages: [...chatHistory, { role: 'assistant', content: userInput }],
       model: 'gpt-3.5-turbo',
     })
+    // @ts-ignore
 
     setChatHistory((prevChat) => [
       ...prevChat,
@@ -50,10 +53,14 @@ export default function Page() {
               {/* Display each chat message here */}
               <div
                 className={
+                  // @ts-ignore
                   message.role === 'user' ? 'text-blue-800' : 'text-green-800'
                 }
               >
-                {message.content}
+                {
+                  // @ts-ignore
+                  message.content
+                }
               </div>
             </div>
           ))}
