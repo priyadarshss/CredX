@@ -1,6 +1,7 @@
 // @ts-nocheck
 'use client'
 
+import OpenAI from 'openai'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -22,6 +23,11 @@ const GaugeComponent = dynamic(() => import('react-gauge-component'), {
   ssr: false,
 })
 
+const openai = new OpenAI({
+  apiKey: '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',
+  dangerouslyAllowBrowser: true,
+})
+
 export default function HomePage() {
   const [address, setUrl] = useState('')
   const [chain, setChain] = useState('')
@@ -31,6 +37,9 @@ export default function HomePage() {
   const [isActive, setIsActive] = useState(true)
   const [showFullDescriptions, setShowFullDescriptions] = useState({})
   const [flag, setFlag] = useState(false)
+  const [userInput, setUserInput] = useState('')
+  const [chatHistory, setChatHistory] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const data = {
     score: 430,
@@ -51,8 +60,6 @@ export default function HomePage() {
         "Allocating funds to potentially value-appreciating assets or participating in DeFi activities can enhance the wallet's financial standing.",
     },
   }
-
-  
 
   const toggleFullDescription = (reason: any) => {
     setShowFullDescriptions((prevState) => ({
@@ -119,10 +126,27 @@ export default function HomePage() {
     setFlag(true)
     console.log(address, chain)
 
-    setTimeout(() => {
-      setLoading(false)
-      setScore(data.score-1) // Update score with data.score
-    }, 5000)
+    setChatHistory((prevChat) => [
+      ...prevChat,
+      { role: 'user', content: userInput },
+    ])
+
+    const chatCompletion = await openai.chat.completions.create({
+      messages: [...chatHistory, { role: 'assistant', content: userInput }],
+      model: 'gpt-3.5-turbo',
+    })
+
+    setChatHistory((prevChat) => [
+      ...prevChat,
+      { role: 'assistant', content: chatCompletion.choices[0].message.content },
+    ])
+
+    console.log(chatCompletion.choices[0].message.content)
+
+    // setTimeout(() => {
+    //   setLoading(false)
+    //   setScore(data.score-1) // Update score with data.score
+    // }, 5000)
   }
 
   return (
