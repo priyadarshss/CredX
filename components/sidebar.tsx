@@ -82,9 +82,9 @@ export const Sidebar = ({
               }}
             />
           </div>
-          <h1 className={cn('text-3xl font-bold', poppins.className)}>
-            <span className='text-white'>Pixa</span>
-            <span className='text-[#fe8400]'>lens</span>
+          <h1 className={cn('text-2xl font-bold', poppins.className)}>
+            <span className='text-white'>Cred</span>
+            <span className='text-[#fe8400]'>X</span>
           </h1>
         </Link>
         <div className='space-y-1'>

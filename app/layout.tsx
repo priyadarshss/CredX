@@ -12,8 +12,8 @@ import Head from 'next/head'
 const font = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Pixalens',
-  description: 'AI Platform',
+  title: 'CredX',
+  description: 'AI Credit Score Analysis Platform',
 }
 
 export default async function RootLayout({

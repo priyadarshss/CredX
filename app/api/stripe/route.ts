@@ -43,7 +43,7 @@ export async function GET() {
           price_data: {
             currency: 'USD',
             product_data: {
-              name: 'Pixalens Pro',
+              name: 'CredX Pro',
               description: 'Unlimited Reviews',
             },
             unit_amount: 999,

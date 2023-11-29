@@ -27,9 +27,9 @@ export const LandingNavbar = () => {
             border: '2px solid white',
           }}
         />
-        <h1 className={cn('text-3xl font-bold', font.className)}>
-          <span className='text-white'>Pixa</span>
-          <span className='text-[#fe8400]'>lens</span>
+        <h1 className={cn('text-2xl font-bold', font.className)}>
+          <span className='text-white'>Cred</span>
+          <span className='text-[#fe8400]'>X</span>
         </h1>
       </Link>
       <div className='flex items-center gap-x-5'>
