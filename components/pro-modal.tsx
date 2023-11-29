@@ -56,7 +56,7 @@ export const ProModal = () => {
               <div className='flex items-center gap-x-4'>
                 <div className={cn('p-2 w-fit rounded-md', "blue")}>
                 </div>
-                <div className='font-semibold text-sm'>{"Credit Analysis"}</div>
+                <div className='font-semibold text-sm'>Unlimited Credit Analysis</div>
               </div>
               <Check className='text-primary w-5 h-5' />
             </Card>
