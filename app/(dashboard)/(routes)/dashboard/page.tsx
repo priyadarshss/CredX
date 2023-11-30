@@ -214,8 +214,8 @@ export default function HomePage() {
                 Report
               </h2>
             </div>
-            <div className='mt-40 mb-12 space-y-2 text-center dark:bg-gray-800'>
-              <h2 className='text-3xl font-bold text-gray-800 md:text-4xl dark:text-white'>
+            <div className='mt-16 mb-12 space-y-2 text-center dark:bg-gray-800'>
+              <h2 className='text-2xl font-bold text-gray-800 md:text-4xl dark:text-white'>
                 Reasons for your Credit Score of
               </h2>
               <h2 className='text-3xl font-bold text-orange-600 md:text-4xl dark:text-white'>
