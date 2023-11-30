@@ -27,7 +27,7 @@ const GaugeComponent = dynamic(() => import('react-gauge-component'), {
 })
 
 // const openai = new OpenAI({
-//   apiKey: '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',
+//   apiKey: 'process.env.OPENAI_API_KEY',
 //   dangerouslyAllowBrowser: true,
 // })
 
