@@ -16,9 +16,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Card } from '@/components/ui/card'
 import { ArrowRight } from 'lucide-react'
 import { set } from 'zod'
+
 const GaugeComponent = dynamic(() => import('react-gauge-component'), {
   ssr: false,
 })
@@ -92,23 +95,23 @@ export default function HomePage() {
   }, [isActive]) // Depend on isActive
 
   useEffect(() => {
-  let interval: any;
+    let interval: any
 
-  if (loading) {
-    setScore(300);
-    interval = setInterval(() => {
-      setScore((prev) => {
-        return prev + 1; // Otherwise, increment score
-      });
-    }, 100);
-  }
-
-  return () => {
-    if (interval && loading) {
-      clearInterval(interval); // Cleanup interval only if loading is false
+    if (loading) {
+      setScore(300)
+      interval = setInterval(() => {
+        setScore((prev) => {
+          return prev + 1 // Otherwise, increment score
+        })
+      }, 100)
     }
-  };
-}, [loading]);
+
+    return () => {
+      if (interval && loading) {
+        clearInterval(interval) // Cleanup interval only if loading is false
+      }
+    }
+  }, [loading])
 
   // const handleSubmit = async (event: any) => {
   //   setLoading(true)
@@ -141,10 +144,39 @@ export default function HomePage() {
     // ])
 
     // console.log(chatCompletion.choices[0].message.content)
+    toast.error(
+      "Hey there, we're experiencing high usage of the API since launch and have exceeded the credit limit 😅. If you face any issues, please feel free to test out our public gpt with a part of our algorithm here - https://chat.openai.com/g/g-5ZXaUFgHm-credit-scout",
+      {
+        position: 'top-right',
+        autoClose: 20000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      }
+    )
+
+    setTimeout(() => {
+      toast.info(
+        "In the meantime, we're working on getting more credits and will be back up soon! So, for the moment, we're going to show you a sample report. 😁 ",
+        {
+          position: 'top-right',
+          autoClose: 12000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        }
+      )
+    }, 12000)
 
     setTimeout(() => {
       setLoading(false)
-      setScore(data.score-1)
+      setScore(data.score - 1)
     }, 9000)
   }
 
