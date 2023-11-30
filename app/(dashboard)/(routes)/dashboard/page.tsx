@@ -213,11 +213,6 @@ export default function HomePage() {
               <h2 className='text-3xl font-bold text-gray-800 md:text-4xl dark:text-white'>
                 Report
               </h2>
-              <p className='lg:mx-auto lg:w-6/12 text-gray-600 dark:text-gray-300'>
-                Quam hic dolore cumque voluptate rerum beatae et quae, tempore
-                sunt, debitis dolorum officia aliquid explicabo? Excepturi,
-                voluptate?
-              </p>
             </div>
             <div className='mt-40 mb-12 space-y-2 text-center dark:bg-gray-800'>
               <h2 className='text-3xl font-bold text-gray-800 md:text-4xl dark:text-white'>
