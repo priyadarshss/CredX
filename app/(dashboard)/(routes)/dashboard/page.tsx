@@ -23,10 +23,10 @@ const GaugeComponent = dynamic(() => import('react-gauge-component'), {
   ssr: false,
 })
 
-const openai = new OpenAI({
-  apiKey: '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',
-  dangerouslyAllowBrowser: true,
-})
+// const openai = new OpenAI({
+//   apiKey: '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',
+//   dangerouslyAllowBrowser: true,
+// })
 
 export default function HomePage() {
   const [address, setUrl] = useState('')
@@ -42,7 +42,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false)
 
   const data = {
-    score: 430,
+    score: 530,
     reasons: {
       'Low overall balance across blockchains':
         'The wallet holds a minimal amount of assets across multiple blockchains: 0.002 MATIC on Polygon with a value of less than $0.01, 0.000121706545464 ETH on Ethereum valued at $0.25, and 0.000104785 BNB on Binance Smart Chain worth $0.02. Additionally, there are no holdings in BTT on the BitTorrent Chain.',
@@ -124,29 +124,28 @@ export default function HomePage() {
     event.preventDefault() // Prevent default form submission
     setLoading(true)
     setFlag(true)
-    console.log(address, chain)
 
-    setChatHistory((prevChat) => [
-      ...prevChat,
-      { role: 'user', content: userInput },
-    ])
+    // setChatHistory((prevChat) => [
+    //   ...prevChat,
+    //   { role: 'user', content: userInput },
+    // ])
 
-    const chatCompletion = await openai.chat.completions.create({
-      messages: [...chatHistory, { role: 'assistant', content: userInput }],
-      model: 'gpt-3.5-turbo',
-    })
+    // const chatCompletion = await openai.chat.completions.create({
+    //   messages: [...chatHistory, { role: 'assistant', content: userInput }],
+    //   model: 'gpt-3.5-turbo',
+    // })
 
-    setChatHistory((prevChat) => [
-      ...prevChat,
-      { role: 'assistant', content: chatCompletion.choices[0].message.content },
-    ])
+    // setChatHistory((prevChat) => [
+    //   ...prevChat,
+    //   { role: 'assistant', content: chatCompletion.choices[0].message.content },
+    // ])
 
-    console.log(chatCompletion.choices[0].message.content)
+    // console.log(chatCompletion.choices[0].message.content)
 
-    // setTimeout(() => {
-    //   setLoading(false)
-    //   setScore(data.score-1) // Update score with data.score
-    // }, 5000)
+    setTimeout(() => {
+      setLoading(false)
+      setScore(data.score-1)
+    }, 9000)
   }
 
   return (
@@ -299,7 +298,10 @@ export default function HomePage() {
         )}
         {/* report end */}
         {/* form start */}
-        <form className='flex flex-col gap-10 mt-12' onSubmit={handleSubmit}>
+        <form
+          className={`flex flex-col ${flag ? 'mt-40' : 'mt-12'} gap-10`}
+          onSubmit={handleSubmit}
+        >
           <div className='flex justify-evenly'>
             <Input
               className='border-2 border-gray-300 p-2 w-1/2'
@@ -337,7 +339,7 @@ export default function HomePage() {
           </div>
           <div className='flex justify-evenly'>
             <Button type='submit' className='flex w-32'>
-              Get my Score
+              {flag && !loading ? 'Get my Score Again' : 'Get my Score'}
             </Button>
           </div>
         </form>
